@@ -1,28 +1,72 @@
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Public = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [recipes, setRecipes] = useState([]); // State to store the recipes
+
+  const handleSearchTermChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearch = async (event) => {
+    event.preventDefault(); // Prevent the default form submit action
+    try {
+      const response = await fetch('http://localhost:3500/recipes/by-ingredients', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ingredients: searchTerm.split(',') }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setRecipes(data); // Update the recipes state with the fetched data
+      } else {
+        console.error('Fetch failed with status:', response.status);
+        // Handle error cases here
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // Handle network or other errors
+    }
+  };
+
   const content = (
     <section className="public">
-        <header>
-            <h1>Welcome to <span className="nowrap">Dan D. Repairs!</span></h1>
-        </header>
-        <main className="public__main">
-            <p>Located in Beautiful Downtown Foo City, Dan D. Repairs  provides a trained staff ready to meet your tech repair needs.</p>
-            <address className="public__addr">
-                Dan D. Repairs<br />
-                555 Foo Drive<br />
-                Foo City, CA 12345<br />
-                <a href="tel:+15555555555">(555) 555-5555</a>
-            </address>
-            <br />
-            <p>Owner: Dan Davidson</p>
-        </main>
-        <footer>
-            <Link to="/login">Employee Login</Link>
-        </footer>
+      <header>
+        <h1><span className="nowrap">Baking Recipe Finder!</span></h1>
+      </header>
+      <main className="public__main">
+        <form onSubmit={handleSearch}>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={handleSearchTermChange}
+            placeholder="Enter ingredients, separated by commas..."
+          />
+          <button type="submit">Search</button>
+        </form>
+        {/* Displaying the search results */}
+        <div className="search-results">
+          {recipes.length > 0 ? (
+            <ul>
+              {recipes.map((recipe, index) => (
+                <li key={index}>{recipe.name}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>No recipes found.</p>
+          )}
+        </div>
+      </main>
+      <footer>
+        <Link to="/recipes">Discover Recipes</Link>
+      </footer>
     </section>
+  );
 
-  )
-  return content
-}
-export default Public
+  return content;
+};
+
+export default Public;
