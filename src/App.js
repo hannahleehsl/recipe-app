@@ -6,13 +6,15 @@ import DashLayout from './components/DashLayout'
 import Welcome from './features/auth/Welcome'
 import RecipesList from './features/recipes/RecipesList'
 import RecipeDashboard from './components/RecipeDashboard'
+import HomePage from './components/HomePage';
 
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<Public />} />
+        <Route index element={<HomePage />} />
+        <Route path="public" element={<Public />} />
         <Route path="login" element={<Login />} />
 
         <Route path="dash" element={<DashLayout />}>

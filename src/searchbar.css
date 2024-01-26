@@ -1,0 +1,63 @@
+.search-bar {
+  display: flex;
+  align-items: center;
+  height: 4em;
+  margin: auto;
+  padding: 0.5em;
+  max-width: 50em;
+  width: 100%;
+  border-radius: 4em;
+  background: #fff; /* Assuming you want a white background */
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  position: relative;
+}
+
+.search-bar input {
+  color: rgb(34, 34, 34);
+  font-weight: bold;
+  width: 49em;
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0.75em;
+  padding-right: 2.5em;
+  border-radius: 2em; /* Full roundness on the input field */
+}
+
+.search-bar input::placeholder {
+  color: #888;
+  width: 100%; /* Lighter text for the placeholder */
+}
+
+.search-btn {
+  width: 2.5em;
+  border: none;
+  background-color: #4db6ce;
+  border-radius: 50%; /* Makes the button round */
+  padding: 10px;
+  margin-left: auto; /* Pushes the button to the right */
+  cursor: pointer;
+  position: absolute; /* Position the button absolutely within .search-bar */
+  right: 10px; /* Distance from the right edge of the search bar */
+}
+
+.search-btn:hover {
+  background: #4c96a7; /* Darker shade on hover */
+}
+
+.search-btn:active {
+  background: #3b828e; /* Even darker when clicked */
+}
+
+/* Adjustments for the icon in the search button */
+.search-btn:before {
+  display: inline-block;
+  font-size: 1.5em; /* Larger icon size */
+  color: #fff; /* White icon */
+}
+
+/* Optional: Hide the overflow of the tags in the container */
+.tags-input-container {
+  font-weight: bold;
+  overflow: hidden;
+}
