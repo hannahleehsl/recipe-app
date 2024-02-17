@@ -37,13 +37,13 @@ header {
   margin-top: 30px;
   margin-left: 30px;
   text-align: left;
-
 }
 
 .nowrap {
   white-space: nowrap;
   font-family: 'Inter', sans-serif;
   font-size: 50px;
+  cursor: grab;
 }
 
 .icon-button {
@@ -236,7 +236,7 @@ a:focus-visible {
   justify-content: center;
   align-items: center;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 .homepage {
@@ -254,13 +254,12 @@ a:focus-visible {
   box-sizing: border-box;
   color: #FFFFFF;
   cursor: pointer;
-  display: inline-block;
   font-family: din-round,sans-serif;
   font-size: 15px;
   font-weight: 700;
   letter-spacing: .8px;
   line-height: 20px;
-  margin-top: 580px;
+  margin-top: 75vh;
   outline: none;
   overflow: visible;
   padding: 13px 16px;
@@ -311,8 +310,8 @@ a:focus-visible {
 .title {
   position: absolute;
   font-size: 80px;
-  margin-top: -200px;
-  margin-left: -150px;
+  margin-top: -30vh;
+  margin-left: -9.2vw;
 }
 
 .tags-input-container {
@@ -412,6 +411,95 @@ a:focus-visible {
 }
 
 .recipe-item:active {
+  border-width: 4px 0 0;
+  background: none;
+}
+
+dialog {
+  margin: auto;
+  padding: 1rem 3rem;
+  background: #99d2da;
+  max-width: 50vw; /* Set maximum width instead of fixed width */
+  width: auto; /* Width adjusts to content */
+  height: auto; /* Height adjusts to content */
+  padding-top: 2rem;
+  border-radius: 20px;
+  border: 0;
+  box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.579);
+}
+
+dialog h2 {
+  font-size: 40px;
+}
+
+dialog h3 {
+  margin-top: 30px;
+  font-size: 25px;
+}
+
+dialog ul, ol {
+  margin-top: 10px;
+  padding: 5px;
+}
+
+.button-20 {
+  text-align: center;
+  appearance: button;
+  background-color: #33b0cc;
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  line-height: 20px;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  outline: none;
+  overflow: visible;
+  padding: 13px 30px;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  transform: translateZ(0);
+  transition: filter .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  width: 100%;
+}
+
+.button-20:after {
+  background-clip: padding-box;
+  background-color: #4db6ce;
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  bottom: -4px;
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.button-20:main,
+.button-20:focus {
+  user-select: auto;
+}
+
+.button-20:hover:not(:disabled) {
+  filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
+}
+
+.button-20:disabled {
+  cursor: auto;
+}
+
+.button-20:active {
   border-width: 4px 0 0;
   background: none;
 }
