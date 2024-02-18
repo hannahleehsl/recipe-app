@@ -28,70 +28,54 @@ const Public = () => {
     setTags(newTags);
   };
 
+  const fetchRecipes = async () => {
+    try {
+      const response = await fetch('http://localhost:3500/recipes', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setRecipes(data);
+      } else {
+        console.error('Failed to fetch recipes');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  // Fetch all recipes when the component mounts or tags change
   useEffect(() => {
-    // Fetch all recipes when the component mounts
-    const fetchRecipes = async () => {
+    fetchRecipes();
+  }, []);
+
+  const handleSearch = async (event) => {
+    event.preventDefault();
+    if (tags.length > 0) {
       try {
-        const response = await fetch('http://localhost:3500/recipes', {
-          method: 'GET',
+        const response = await fetch('http://localhost:3500/recipes/by-ingredients', {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
+          body: JSON.stringify({ ingredients: tags }),
         });
+
         if (response.ok) {
           const data = await response.json();
           setRecipes(data);
         } else {
-          console.error('Failed to fetch recipes');
+          console.error('Fetch failed with status:', response.status);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
-    };
-    fetchRecipes();
-  }, []);
-  const handleSearch = async (event) => {
-    event.preventDefault();
-    try {
-        const response = await fetch('http://localhost:3500/recipes/by-ingredients', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ ingredients: tags }),
-        });
-
-        if (response.ok) {
-            let data = await response.json();
-            console.log(data);
-
-            // Normalize search tags to lowercase and ensure it's an array of individual search terms
-            const searchTerms = tags.map(tag => tag.toLowerCase().split(/\s+/)).flat();
-
-            // Analyze and sort recipes based on match count
-            data = data.map(recipe => {
-                // Process ingredients into a flat array of lowercase words for comparison
-                const ingredientWords = recipe.ingredients
-                    .flatMap(ingredient => ingredient.toLowerCase().split(/\s+/));
-
-                // Calculate match count by checking if any search term is included in any ingredient word
-                const matchCount = ingredientWords.reduce((total, ingredientWord) => {
-                    return total + (searchTerms.some(searchTerm => ingredientWord.includes(searchTerm)) ? 1 : 0);
-                }, 0);
-
-                return { ...recipe, matchCount };
-            });
-
-            // Filter out recipes with no matches and sort by match count in descending order
-            data = data.filter(recipe => recipe.matchCount > 0);
-            data.sort((a, b) => b.matchCount - a.matchCount);
-
-            setRecipes(data);
-        } else {
-            console.error('Fetch failed with status:', response.status);
-        }
-    } catch (error) {
-        console.error('Error fetching data:', error);
+    } else {
+      // If tags are empty, fetch all recipes again
+      setRecipes([]);
     }
   };
 

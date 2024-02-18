@@ -231,12 +231,18 @@ a:focus-visible {
 
 
 .search-results ul {
-  margin: 4em;
+  margin: 4em auto;
   list-style: none;
+  display: flex;
   justify-content: center;
-  align-items: center;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  flex-wrap: wrap;
+}
+
+.search-results li {
+  display: flex;
+  justify-content: center;
+  width: 350px; /* or your desired width */
+  margin: 0 20px 50px; /* Adjust as needed for spacing */
 }
 
 .homepage {
@@ -364,7 +370,7 @@ a:focus-visible {
   font-size: 15px;
   font-weight: 700;
   letter-spacing: .8px;
-  line-height: 3em;
+  line-height: 5em;
   margin: 2em;
   outline: none;
   overflow: visible;
